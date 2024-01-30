@@ -247,42 +247,41 @@ public class ConditionEx {
 		System.out.print("과탐 점수 : ");
 		int src5  = sc.nextInt();
 		
-	
-  String result = ""; // 40점 미만 과목을 저장할 문자열
-  boolean flag = false;
-  
+		
+		
+	double total = (src1 + src2 +src3 + src4 + src5) / 5; 
+  String subjects = ""; // 40점 미만 과목을 저장할 문자열
+
   if (src1 < 40) {
-  	result += "국어 "; flag = true;
+      subjects += "국어 ";
   }
   if (src2 < 40) {
-  	result += "영어 "; flag = true;
+      subjects += "영어 ";
   }
   if (src3 < 40) {
-  	result += "수학 "; flag = true;
+      subjects += "수학 ";
   }
   if (src4 < 40) {
-  	result += "사탐 "; flag = true;
+      subjects += "사탐 ";
   }
   if (src5 < 40) {
-  	result += "과탐 "; flag = true;
+      subjects += "과탐 ";
   }
-  	if(flag) {
-  		System.out.printf("FAIL [40점 미만 과목 : %s ] \n", result);
-  	}
-  	
-  	double total = (src1 + src2 +src3 + src4 + src5) / 5; 
+  if (!subjects.isEmpty()) {
+    System.out.println("FAIL [40점 미만 과목 : " + subjects.trim() + "]");  
   
-	  if(total < 60) {
-	  	System.out.printf("FAIL [점수 : %.1f (평균 미달)]", total);  	
-	  	return;
-	  }
-	  System.out.printf("PASS [점수 : %.1f]" , total);
-	    
+	  if(total >= 60) {
+	  	System.out.printf("PASS [점수 : %.1f]" , total);
+	  }else if(total < 60){
+	  	System.out.printf("FAIL [점수 : %.1f (평균 미달)]", total);
+	  }else if(src1 < 60 || src2 < 60 || src3 < 60 || src4 < 60 || src5 < 60 ) {
 	  	
-	 }
+	  
+	  	
+	  }
 		
 	}
-
+}
 	
 	
 	
