@@ -279,6 +279,7 @@ public class ConditionEx {
 	  System.out.printf("PASS [점수 : %.1f]" , total);
 	    
 	  	
+	  
 	  }
 		
 	}
