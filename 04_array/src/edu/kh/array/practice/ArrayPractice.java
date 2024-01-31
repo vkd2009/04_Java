@@ -66,6 +66,7 @@ public class ArrayPractice {
 				System.out.println("일치하는 값이 존재하지 않습니다");
 			}
 		}
+		
 	}
 	
 	
