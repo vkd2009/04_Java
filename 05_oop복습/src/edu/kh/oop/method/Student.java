@@ -50,7 +50,21 @@ public class Student {
 		return name;
 	}
 	
+	public String getStudentNumber() {
+		return studentNumber;
+	}
 	
+	public char getGender() {
+		return gender;
+	}
+	
+	public int getJava() {
+		return java;
+	}
+	
+	public int getHtml() {
+		return html;
+	}
 	
 	
 	
