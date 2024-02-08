@@ -19,7 +19,8 @@ public class Test1 {
 		String[] fruits = new String[5]; // 5칸 짜리 과일이름 저장 배열 생성
 		Scanner sc = new Scanner(System.in);
 		
-		int index = 0; // 과일 이름이 대입 될 인덱스를 지정하는 변수
+		int index = 0; // 과일 이름이 대입 될 인덱스를 지정하는 변수 
+		
 		
 		while(true) { // 무한반복
 			System.out.print("과일 이름 입력 >>> ");
