@@ -6,6 +6,7 @@ import java.util.Scanner;
 import edu.kh.collection.pack1.model.dto.Book;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 // 컬렉션 프레임워크 : Java에서 자료구조를 만들어서 모아둔 것
 // 
@@ -27,7 +28,7 @@ public class ListService {
 	 */
 	public void method1() {
 		
-		// List 객체 생성
+		// 	 List 객체 생성
 		// - List (인터페이스) -> 객체 생성 불가 -> 다형성 이용
 		// - ArrayList (클래스) (List의 후손)
 //		List list = new ArrayList(); // 10칸 짜리 생성
@@ -171,7 +172,19 @@ public class ListService {
 	 */
 	public void bookManage() {
 		
-		List<Book> bookList = new	ArrayList<Book>();
+		/* ArrayList : 배열 형태의 리스트
+		 * 장점 : 검색이 빠름
+		 * 단점 : 중간 삽입, 제거가 느림
+		 * 
+		 * LinkedList : 연결된 형태의 리스트(기차)
+		 * 장점 : 중간 삽입, 제거가 빠름
+		 * 단점 : 검색이 느림
+		 * 
+		 */
+		
+		
+//		List<Book> bookList = new	ArrayList<Book>();
+		List<Book> bookList = new	LinkedList<Book>();
 		
 		Scanner sc = new Scanner(System.in);
 		
