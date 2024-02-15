@@ -164,5 +164,55 @@ public class JavaAPIService {
 	}
 	
 	
+	/**
+	 * StringBuilder / StringBuffer 클래스
+	 * - String의 불변성 문제를 해결한 클래스
+	 *  -> 가변성(mutable)
+	 * 
+	 * - 기본 16글자 저장할 크기로 생성
+	 *   저장되는 문자열의 길이에 따라 크기가 증가/감소
+	 *   -> 마음대로 문자열 수정, 삭제 가능!
+	 *   -> 수정, 삭제를 해도 추가적인 객체 생성이 없어 효율이 좋음!
+	 *   
+	 *  
+	 * - StringBuilder : Thread Safe 미제공 (비동기, 추천)
+	 * - StringBuffer  : Thread Safe  제공 (동기)
+	 */
+	public void method6() {
+		
+		// StringBuilder 객체 생성
+		StringBuilder sb = new StringBuilder();
+		
+		
+		// StringBuilder 媛앹껜�뿉 臾몄옄�뿴�쓣 �뙎�븘 �굹媛��뒗 諛⑹떇�쑝濡� �궗�슜
+		// -> �뮘�뿉 異붽�(append), �븵�뿉 異붽�
+		sb.append("�삤�뒛 �젏�떖�� "); // "�삤�뒛 �젏�떖�� "
+		System.out.println(System.identityHashCode(sb));
+		
+		sb.append("臾댁뾿�쓣 癒뱀쓣源뚯슂?"); // "�삤�뒛 �젏�떖�� 臾댁뾿�쓣 癒뱀쓣源뚯슂?"
+		System.out.println(System.identityHashCode(sb));
+		
+		sb.insert(0, "2�썡 14�씪 "); // 0踰� �씤�뜳�뒪�뿉 �궫�엯 == �젣�씪 �븵�뿉 異붽�
+		System.out.println(System.identityHashCode(sb));
+		
+		// identityHashCode 媛믪씠 �씪�젙�븿 
+		// == 李몄“�븯�뒗 媛앹껜媛� 蹂��븯吏� �븡�쓬
+		// == 媛앹껜 �궡�뿉 媛믩쭔 �닔�젙�릺怨� �엳�떎 == 媛�蹂��꽦 
+		
+		System.out.println(sb);
+		
+		// StringBuilder -> String 蹂��솚
+		String temp = sb.toString(); // 媛앹껜�뿉 ���옣�맂 �븘�뱶瑜� 臾몄옄�뿴濡� 諛섑솚
+		
+		
+		// String[] 臾몄옄�뿴.split("援щ텇�옄")
+		// - 臾몄옄�뿴�쓣 "援щ텇�옄"瑜� 湲곗��쑝濡� 履쇨컻�뼱 String[]濡� 諛섑솚
+		String[] arr = temp.split(" ");
+		
+		for(String str : arr) {
+			System.out.println(str);
+		}
+	}
+	
 	
 }

@@ -3,7 +3,9 @@ package edu.kh.io.pack2.model.service;
 
 
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -214,6 +216,148 @@ public class ByteService {
 		}
 	}
 	
+	
+	
+	/**
+	 * 바이트 기반 파일 입력
+	 */
+	public void fileByteInput() {
+		
+		// 파일 입력용 바이트 기반 스트림
+		FileInputStream fis = null;
+		
+		try {
+		  fis = new FileInputStream("\\io_test\\20240215\\노래가사.txt");
+		  
+		  // 방법 1. 파일 내부 내용을 1byte씩 끊어서 가져오기
+		  // -> 2byte 범주의 글자들이 깨지는 문제가 발생
+		  
+		  // 자바에서 byte는 정수형 
+		  // -> 다루기 힘들기 떄문에 정수 기본형인 int로 변환해서 사용
+		  
+		  int value = 0; // 읽어온 바이트 값을 저장할 변수
+		  
+		  StringBuilder sb = new StringBuilder();
+		  
+		  while(true) { // 무한 반복
+			  
+		     value = fis.read(); // 1byte씩 읽어오기
+		     // 단, 더 이상 읽어올 값이 없으면 -1 반환
+		     
+		     if(value == -1) break; // 다 읽어 왔으면 break;
+		     
+		     // 읽어온 값을 StringBuilder 객체에 추가
+		     sb.append((char)value); // char로 강제 형변환해서 글자 형태로 추가
+		     
+		  }
+			
+		  System.out.println(sb.toString()); // 읽어온 내용 콘솔에 출력
+		  
+		  // InputStream은 flush() 없음
+		  
+		}catch(IOException e) {
+		 e.printStackTrace();
+			
+		} finally {
+			
+		  // 사용 완료된 Stream 메모리 반환(제거, 닫기)
+		  try {
+			if(fis != null) fis.close();
+			  
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+			
+		}
+	}
+	
+	
+	
+	/**
+	 * 바이트 기반 파일 입력2
+	 */
+	public void fileByteInput2() {
+		
+		// 파일 입력용 바이트 기반 스트림
+		FileInputStream fis = null;
+		
+		try {
+		  fis = new FileInputStream("\\io_test\\20240215\\노래가사.txt");
+		  
+		  // 방법 2. 파일에 저장된 모든 byte 값을 다 읽어와
+		  //        byte[] 형태로 반환 받기
+		  //	   -> 이 후 byte[] 배열을 이용해서 String 객체 생성
+		  //       -> String 생성 시 배열 요소 2개씩 묶어 한 글자로 해석해
+		  //          깨지는 글자 없이 문자열로 변환
+		  
+		  byte[] bytes = fis.readAllBytes();
+		  
+		  String content = new String(bytes);
+		  
+		  System.out.println(content);
+		  
+		  
+		}catch(IOException e) {
+		 e.printStackTrace();
+			
+		} finally {
+			
+		  // 사용 완료된 Stream 메모리 반환(제거, 닫기)
+		  try {
+			if(fis != null) fis.close();
+			  
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+     }			
+   }
+	
+	
+	
+   /**
+    * BufferedInputStream 보조 스트림을 이용한 성능 향상 
+    */
+   public void bufferendFileByteInput() {
+	
+	 FileInputStream fis = null;
+	 BufferedInputStream bis =null;
+	   
+	try {
+		
+	  // 기반 스트림 생성
+	  fis = new FileInputStream("/io_test/20240215/노래가사.txt");
+	  
+	  // 보조 스트림 생성
+	  bis = new BufferedInputStream(fis);
+	  
+	  // 파일 내용을 byte[] 배열로 반환 받아 String으로 변경
+	  String content = new String( bis.readAllBytes());
+		
+	  System.out.println(content);
+	  
+		}catch (Exception e) { // Exception은 IOException의 부모(다형성)
+			e.printStackTrace();
+	 
+		} finally {
+		
+			try { // 보조 스트림만 close()해도 기반 스트림도 같이 close()됨
+				if(bis != null) bis.close();
+			} catch (IOException e) {
+		
+				e.printStackTrace();
+			}		
+		}   
+   	 }
+	  
+	
+	/** 파일 복사
+	 * 
+	 * 파일 경로를 입력 받아
+	 * 지정된 파일과 같은 경로에
+	 */
+	public void fileCopy() {
+		
+	}
 	
 	
 	
