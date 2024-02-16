@@ -5,9 +5,12 @@ package edu.kh.io.pack2.model.service;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 public class ByteService {
 	
@@ -350,17 +353,115 @@ public class ByteService {
    	 }
 	  
 	
-	/** 파일 복사
-	 * 
-	 * 파일 경로를 입력 받아
-	 * 지정된 파일과 같은 경로에
-	 */
-	public void fileCopy() {
-		
-	}
-	
-	
-	
-	
-	
+   /** 파일 복사
+ 	 * 
+ 	 * 파일 경로를 입력 받아
+ 	 * 지정된 파일과 같은 경로에 복사된 파일 출력하기
+ 	 * 
+ 	 * [실행화면]
+ 	 * 파일 경로 입력 : /io_test/20240215/노래가사.txt
+ 	 * 복사 완료 :      /io_test/20240215/노래가사_copy.txt
+ 	 * 
+ 	 * 1) 입력된 경로에 파일이 있는지 검사 : File.exists()
+ 	 * 
+ 	 * 2) 있으면 파일 내용을 모두 읽어오기 : FileInputStream
+ 	 *																			 + BufferedInputStream
+ 	 *
+ 	 * 3) 읽어온 내용을 같은 위치에 "파일명_copy" 이름으로 출력
+ 	 *    : FileOutputStream + BufferedOutputStream
+ 	 * 
+ 	 * + Scanner 대신 BufferedReader 이용
+ 	 * 
+ 	 */
+ 	public void fileCopy() {
+ 		
+ 		// 스트림 참조 변수 선언
+ 		BufferedReader br = null; // 문자열 입력용 스트림
+ 		
+ 		FileInputStream      fis = null; // 파일 입력
+ 		BufferedInputStream  bis = null; // 입력 보조
+ 		
+ 		FileOutputStream     fos = null; // 파일 출력
+ 		BufferedOutputStream bos = null; // 출력 보조
+ 		
+ 		try {
+ 			
+ 			// 키보드 입력을 받기 위한 스트림 객체 생성
+ 			br = new BufferedReader(new InputStreamReader(System.in));
+ 			
+ 			
+ 			// 경로 입력 받기
+ 			System.out.print("파일 경로 입력 : ");
+ 			String target = br.readLine(); // 입력된 한 줄 읽어오기
+ 			
+ 			
+ 			// 해당 경로에 파일이 존재하는지 확인
+ 			File file = new File(target);
+ 			
+ 			if(!file.exists()) { // 해당 경로에 파일이 존재하지 않으면
+ 				System.out.println("[해당 경로에 파일이 존재하지 않습니다]");
+ 				return;
+ 			}
+ 			// ------------------------------------------------------------
+ 			
+ 			// target이 가리키는 파일을 입력 받을 수 있도록
+ 			// 입력용 스트림 생성
+ 			fis = new FileInputStream(target);
+ 			bis = new BufferedInputStream(fis);
+ 			
+ 			// 입력용 스트림을 이용해서 target 입력 받기
+ 			byte[] bytes = bis.readAllBytes();
+ 			
+ 			// --------------------------------------------------------------
+ 			
+ 			// 출력할 파일의 경로 + _copy가 붙은 파일 이름
+ 			
+ 			// target :  /io_test/20240215/노래가사.txt
+ 			// copy   :  /io_test/20240215/노래가사_copy.txt
+ 			
+ 			StringBuilder sb = new StringBuilder();
+ 			sb.append(target);  // /io_test/20240215/노래가사.txt
+ 			
+ 			// int String.lastIndexOf("문자열")
+ 			
+ 			// - String 뒤에서 부터 검색해서
+ 			//   "문자열"과 일치하는 부분의 인덱스를 반환
+ 			//   없으면 -1 반환
+ 			
+ 			int insertPoint = target.lastIndexOf(".");
+ 			sb.insert(insertPoint, "_copy");
+ 		  //   /io_test/20240215/노래가사_copy.txt
+ 			
+ 			String copy = sb.toString(); // 복사할 파일의 경로
+ 			
+ 			// 출력용 스트림 생성
+ 			fos = new FileOutputStream(copy);
+ 			bos = new BufferedOutputStream(fos);
+ 			
+ 			// 읽어왔던 내용 bytes를 bos를 이용해서 출력
+ 			bos.write(bytes);
+ 			bos.flush();// 스트림에 남아있는 데이터 밀어내기
+ 			
+ 			System.out.println("복사 완료 : " + copy);
+ 			
+ 		} catch(Exception e) {
+ 			e.printStackTrace();
+ 			
+ 		} finally {
+ 			
+ 			try { // 사용한 스트림 메모리 반환(닫기, 제거)
+ 				
+ 				if(br  != null) br.close();
+ 				if(bis != null) bis.close();
+ 				if(bos != null) bos.close();
+ 				
+ 			}catch (IOException e) {
+ 				e.printStackTrace();
+ 			}
+ 			
+ 		}
+ 	}	
 }
+	
+	
+	
